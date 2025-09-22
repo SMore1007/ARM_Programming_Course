@@ -44,13 +44,13 @@
 /* -------------------------------------------------------------------
  * Memory-Mapped Registers
  * -------------------------------------------------------------------*/
-#define RCC_AHB1ENR   (*(volatile uint32_t *)0x40023830) // Clock enable register
+#define RCC_AHB1ENR   (*(volatile uint32_t *)0x40023830)  // Clock enable register
 
-#define GPIOD_MODER (*(volatile uint32_t *)0x40020C00)  // GPIOD mode register
-#define GPIOD_ODR   (*(volatile uint32_t *)0x40020C14) //  GPIOD output register
+#define GPIOD_MODER   (*(volatile uint32_t *)0x40020C00)  // GPIOD mode register
+#define GPIOD_ODR     (*(volatile uint32_t *)0x40020C14)  //  GPIOD output register
 
-#define GPIOC_MODER   (*(volatile uint32_t *)0x40020800) // GPIOC mode register
-#define GPIOC_IDR     (*(volatile uint32_t *)0x40020810) // GPIOC input data register
+#define GPIOC_MODER   (*(volatile uint32_t *)0x40020800)  // GPIOC mode register
+#define GPIOC_IDR     (*(volatile uint32_t *)0x40020810)  // GPIOC input data register
 
 /* -------------------------------------------------------------------
  * Main Function
@@ -60,9 +60,7 @@ int main(void)
     /* -------------------------------
      *  Enable Clock for GPIOC & GPIOD
      * -------------------------------
-     * RCC_AHB1ENR:
-     * Bit 2 -> GPIOCEN
-     * Bit 3 -> GPIODEN
+     * RCC_AHB1ENR: Bit 2 -> GPIOCEN, Bit 3 -> GPIODEN
      * 0x5 = (1 << 2) | (1 << 3)
      */
     RCC_AHB1ENR |= (1 << 2) | (1 << 3);
@@ -95,28 +93,17 @@ int main(void)
     volatile bool pc4LedFlag = false;
     volatile bool pc5LedFlag = false;
     volatile bool pc6LedFlag = false;
-    /* -------------------------------
-     * Super Loop
-     * -------------------------------*/
+
     while (1)
     {
-        /* -------------------------------
-         * Read Button State (PC4, PC5 and PC6)
-         * -------------------------------
-         */
-        if ((GPIOC_IDR & (1U << 4)) == 0){
-        	pc4LedFlag = true;   // Button pressed
-        }
-        else if ((GPIOC_IDR & (1U << 5)) == 0){
-        	pc5LedFlag = true;  // Button released
+    	/* Check for the PC4 Button*/
+    	pc4LedFlag = ((GPIOC_IDR & (1U << 4)) == 0);
 
-        } else if ((GPIOC_IDR & (1U << 6)) == 0){
-        	pc6LedFlag = true;
-        }else{
-        	pc4LedFlag = false;
-        	pc5LedFlag = false;
-        	pc6LedFlag = false;
-        }
+    	/* Check for the PC5 Button*/
+    	pc5LedFlag = ((GPIOC_IDR & (1U << 5)) == 0);
+
+    	/* Check for the PC6 Button*/
+    	pc6LedFlag = ((GPIOC_IDR & (1U << 6)) == 0);
 
         /* -------------------------------
          * Control LED based on Flag
@@ -137,3 +124,8 @@ int main(void)
         }
     }
 }
+
+
+
+
+
