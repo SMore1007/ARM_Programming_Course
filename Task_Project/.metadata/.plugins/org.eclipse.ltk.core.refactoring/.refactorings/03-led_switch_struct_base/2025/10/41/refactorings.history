@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;03-led_switch_struct_base/Inc/struct_header.c&apos; to &apos;struct_header.h&apos;" description="Rename resource &apos;struct_header.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Inc/struct_header.c" name="struct_header.h" stamp="1759667484323" updateReferences="true"/>
+</session>

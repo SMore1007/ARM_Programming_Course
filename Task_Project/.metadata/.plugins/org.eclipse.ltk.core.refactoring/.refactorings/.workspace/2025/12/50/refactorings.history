@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;04-otg_sh_IRQ&apos; to &apos;04-otg_HS_IRQ&apos;" description="Rename resource &apos;04-otg_sh_IRQ&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/04-otg_sh_IRQ" name="04-otg_HS_IRQ" stamp="1765212911757" updateReferences="true"/>
+</session>
