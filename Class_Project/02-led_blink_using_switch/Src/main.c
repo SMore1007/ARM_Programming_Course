@@ -20,15 +20,25 @@
  Register Memory Mapping
  -------------------------------------------
  RCC Base Address: 0x40023800
- RCC_AHB1ENR Offset: 0x30 → RCC_AHB1ENR: 0x40023830
+
+ RCC_AHB1ENR Offset:     0x30
+ RCC_AHB1ENR:      0x40023830
 
  GPIOA Base Address (LED): 0x40020000
- GPIOA_MODER Offset: 0x00 → GPIOA_MODER: 0x40020000
- GPIOA_ODR   Offset: 0x14 → GPIOA_ODR:   0x40020014
+
+ GPIOA_MODER Offset:             0x00
+ GPIOA_MODER:              0x40020000
+
+ GPIOA_ODR   Offset:             0x14
+ GPIOA_ODR:                0x40020014
 
  GPIOC Base Address (Switch): 0x40020800
- GPIOC_MODER Offset: 0x00 → GPIOC_MODER: 0x40020800
- GPIOC_IDR   Offset: 0x10 → GPIOC_IDR:   0x40020810
+
+ GPIOC_MODER Offset:                0x00
+ GPIOC_MODER:                 0x40020800
+
+ GPIOC_IDR   Offset:                0x10
+ GPIOC_IDR:                   0x40020810
 */
 
 #include <stdint.h>
