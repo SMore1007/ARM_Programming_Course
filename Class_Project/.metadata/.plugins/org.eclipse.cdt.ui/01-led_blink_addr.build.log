@@ -1,0 +1,20 @@
+15:30:18 **** Build of configuration Debug for project 01-led_blink_addr ****
+make -j16 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f446retx.d" -MT"Startup/startup_stm32f446retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Device/ST/STM32F4xx/Include" -I"D:/STM32 Codes/Workspace_2/chip_headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc -o "01-led_blink_addr.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Class_Project\01-led_blink_addr\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="01-led_blink_addr.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 01-led_blink_addr.elf
+ 
+arm-none-eabi-size  01-led_blink_addr.elf 
+arm-none-eabi-objdump -h -S 01-led_blink_addr.elf  > "01-led_blink_addr.list"
+   text	   data	    bss	    dec	    hex	filename
+    828	      0	   1568	   2396	    95c	01-led_blink_addr.elf
+Finished building: default.size.stdout
+ 
+Finished building: 01-led_blink_addr.list
+ 
+
+15:30:19 Build Finished. 0 errors, 0 warnings. (took 907ms)
+

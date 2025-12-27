@@ -1,0 +1,17 @@
+16:58:12 **** Incremental Build of configuration Debug for project 02-led_blink_using_switch ****
+make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "02-led_blink_using_switch.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\02-led_blink_using_switch\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="02-led_blink_using_switch.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 02-led_blink_using_switch.elf
+ 
+arm-none-eabi-size  02-led_blink_using_switch.elf 
+arm-none-eabi-objdump -h -S 02-led_blink_using_switch.elf  > "02-led_blink_using_switch.list"
+   text	   data	    bss	    dec	    hex	filename
+   1008	      0	   1568	   2576	    a10	02-led_blink_using_switch.elf
+Finished building: default.size.stdout
+ 
+Finished building: 02-led_blink_using_switch.list
+ 
+
+16:58:13 Build Finished. 0 errors, 0 warnings. (took 976ms)
+
