@@ -1,0 +1,4 @@
+../Src/main.c:23:19:svc_call	24	static,ignoring_inline_asm
+../Src/main.c:40:5:main	24	static
+../Src/main.c:62:29:SVC_Handler	0	static,ignoring_inline_asm
+../Src/main.c:74:6:SVC_Handler_C	40	static
