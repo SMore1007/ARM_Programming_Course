@@ -963,11 +963,11 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x000029fc      0x112 ./Src/sysmem.o
  .debug_macro   0x00002b0e      0x23c ./Src/sysmem.o
 
-.debug_line     0x00000000     0x14d3
- .debug_line    0x00000000      0x62e ./Src/main.o
- .debug_line    0x0000062e      0x8a7 ./Src/syscalls.o
- .debug_line    0x00000ed5      0x583 ./Src/sysmem.o
- .debug_line    0x00001458       0x7b ./Startup/startup_stm32f446retx.o
+.debug_line     0x00000000     0x14d2
+ .debug_line    0x00000000      0x62d ./Src/main.o
+ .debug_line    0x0000062d      0x8a7 ./Src/syscalls.o
+ .debug_line    0x00000ed4      0x583 ./Src/sysmem.o
+ .debug_line    0x00001457       0x7b ./Startup/startup_stm32f446retx.o
 
 .debug_str      0x00000000     0x998e
  .debug_str     0x00000000     0x998e ./Src/main.o
