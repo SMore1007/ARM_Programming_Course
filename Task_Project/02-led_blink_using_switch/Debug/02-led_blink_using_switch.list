@@ -79,83 +79,45 @@ Disassembly of section .text:
  8000200:	080003cc 	.word	0x080003cc
 
 08000204 <main>:
-
-/* -------------------------------------------------------------------
- * Main Function
- * -------------------------------------------------------------------*/
-int main(void)
-{
  8000204:	b480      	push	{r7}
  8000206:	b083      	sub	sp, #12
  8000208:	af00      	add	r7, sp, #0
-     *  Enable Clock for GPIOC & GPIOD
-     * -------------------------------
-     * RCC_AHB1ENR: Bit 2 -> GPIOCEN, Bit 3 -> GPIODEN
-     * 0x5 = (1 << 2) | (1 << 3)
-     */
-    RCC_AHB1ENR |= (1 << 2) | (1 << 3);
  800020a:	4b44      	ldr	r3, [pc, #272]	@ (800031c <main+0x118>)
  800020c:	681b      	ldr	r3, [r3, #0]
  800020e:	4a43      	ldr	r2, [pc, #268]	@ (800031c <main+0x118>)
  8000210:	f043 030c 	orr.w	r3, r3, #12
  8000214:	6013      	str	r3, [r2, #0]
-     * -------------------------------
-     * MODER[24:25] = 01 (PIN12 Output Mode)
-     * MODER[26:27] = 01 (PIN13 Output Mode)
-     */
-
-    GPIOD_MODER |=  (1U << 24);  // Set MODER10 = 1
  8000216:	4b42      	ldr	r3, [pc, #264]	@ (8000320 <main+0x11c>)
  8000218:	681b      	ldr	r3, [r3, #0]
  800021a:	4a41      	ldr	r2, [pc, #260]	@ (8000320 <main+0x11c>)
  800021c:	f043 7380 	orr.w	r3, r3, #16777216	@ 0x1000000
  8000220:	6013      	str	r3, [r2, #0]
-    GPIOD_MODER &= ~(1U << 25);  // Set MODER11 = 0
  8000222:	4b3f      	ldr	r3, [pc, #252]	@ (8000320 <main+0x11c>)
  8000224:	681b      	ldr	r3, [r3, #0]
  8000226:	4a3e      	ldr	r2, [pc, #248]	@ (8000320 <main+0x11c>)
  8000228:	f023 7300 	bic.w	r3, r3, #33554432	@ 0x2000000
  800022c:	6013      	str	r3, [r2, #0]
-
-    GPIOD_MODER |=  (1U << 26);  // Set MODER10 = 1
  800022e:	4b3c      	ldr	r3, [pc, #240]	@ (8000320 <main+0x11c>)
  8000230:	681b      	ldr	r3, [r3, #0]
  8000232:	4a3b      	ldr	r2, [pc, #236]	@ (8000320 <main+0x11c>)
  8000234:	f043 6380 	orr.w	r3, r3, #67108864	@ 0x4000000
  8000238:	6013      	str	r3, [r2, #0]
-    GPIOD_MODER &= ~(1U << 27);  // Set MODER11 = 0
  800023a:	4b39      	ldr	r3, [pc, #228]	@ (8000320 <main+0x11c>)
  800023c:	681b      	ldr	r3, [r3, #0]
  800023e:	4a38      	ldr	r2, [pc, #224]	@ (8000320 <main+0x11c>)
  8000240:	f023 6300 	bic.w	r3, r3, #134217728	@ 0x8000000
  8000244:	6013      	str	r3, [r2, #0]
-     * MODER[10:11] = 00 (Input Mode)
-     * MODER[12:13] = 00 (Input Mode)
-     */
-
-    // GPIOC Pin4, pin5 and pin6 to input mode
-    GPIOC_MODER &= ~((3U << 8) | (3U << 10) | (3U << 12));
  8000246:	4b37      	ldr	r3, [pc, #220]	@ (8000324 <main+0x120>)
  8000248:	681b      	ldr	r3, [r3, #0]
  800024a:	4a36      	ldr	r2, [pc, #216]	@ (8000324 <main+0x120>)
  800024c:	f423 537c 	bic.w	r3, r3, #16128	@ 0x3f00
  8000250:	6013      	str	r3, [r2, #0]
-
-    // Flag to track LED state
-    volatile bool pc4LedFlag = false;
  8000252:	2300      	movs	r3, #0
  8000254:	71fb      	strb	r3, [r7, #7]
-    volatile bool pc5LedFlag = false;
  8000256:	2300      	movs	r3, #0
  8000258:	71bb      	strb	r3, [r7, #6]
-    volatile bool pc6LedFlag = false;
  800025a:	2300      	movs	r3, #0
  800025c:	717b      	strb	r3, [r7, #5]
-
-    while (1)
-    {
-    	/* Check for the PC4 Button*/
-    	pc4LedFlag = ((GPIOC_IDR & (1U << 4)) == 0);
  800025e:	4b32      	ldr	r3, [pc, #200]	@ (8000328 <main+0x124>)
  8000260:	681b      	ldr	r3, [r3, #0]
  8000262:	f003 0310 	and.w	r3, r3, #16
@@ -165,9 +127,6 @@ int main(void)
  800026c:	2300      	movne	r3, #0
  800026e:	b2db      	uxtb	r3, r3
  8000270:	71fb      	strb	r3, [r7, #7]
-
-    	/* Check for the PC5 Button*/
-    	pc5LedFlag = ((GPIOC_IDR & (1U << 5)) == 0);
  8000272:	4b2d      	ldr	r3, [pc, #180]	@ (8000328 <main+0x124>)
  8000274:	681b      	ldr	r3, [r3, #0]
  8000276:	f003 0320 	and.w	r3, r3, #32
@@ -177,9 +136,6 @@ int main(void)
  8000280:	2300      	movne	r3, #0
  8000282:	b2db      	uxtb	r3, r3
  8000284:	71bb      	strb	r3, [r7, #6]
-
-    	/* Check for the PC6 Button*/
-    	pc6LedFlag = ((GPIOC_IDR & (1U << 6)) == 0);
  8000286:	4b28      	ldr	r3, [pc, #160]	@ (8000328 <main+0x124>)
  8000288:	681b      	ldr	r3, [r3, #0]
  800028a:	f003 0340 	and.w	r3, r3, #64	@ 0x40
@@ -189,79 +145,61 @@ int main(void)
  8000294:	2300      	movne	r3, #0
  8000296:	b2db      	uxtb	r3, r3
  8000298:	717b      	strb	r3, [r7, #5]
-
-        /* -------------------------------
-         * Control LED based on Flag
-         * -------------------------------*/
-        if (pc4LedFlag){
  800029a:	79fb      	ldrb	r3, [r7, #7]
  800029c:	b2db      	uxtb	r3, r3
  800029e:	2b00      	cmp	r3, #0
  80002a0:	d00c      	beq.n	80002bc <main+0xb8>
-        	GPIOD_ODR |=  (1U << 12);
  80002a2:	4b22      	ldr	r3, [pc, #136]	@ (800032c <main+0x128>)
  80002a4:	681b      	ldr	r3, [r3, #0]
  80002a6:	4a21      	ldr	r2, [pc, #132]	@ (800032c <main+0x128>)
  80002a8:	f443 5380 	orr.w	r3, r3, #4096	@ 0x1000
  80002ac:	6013      	str	r3, [r2, #0]
-        	GPIOD_ODR &= ~(1U << 13);
  80002ae:	4b1f      	ldr	r3, [pc, #124]	@ (800032c <main+0x128>)
  80002b0:	681b      	ldr	r3, [r3, #0]
  80002b2:	4a1e      	ldr	r2, [pc, #120]	@ (800032c <main+0x128>)
  80002b4:	f423 5300 	bic.w	r3, r3, #8192	@ 0x2000
  80002b8:	6013      	str	r3, [r2, #0]
  80002ba:	e7d0      	b.n	800025e <main+0x5a>
-        }
-        else if (pc5LedFlag){
  80002bc:	79bb      	ldrb	r3, [r7, #6]
  80002be:	b2db      	uxtb	r3, r3
  80002c0:	2b00      	cmp	r3, #0
  80002c2:	d00c      	beq.n	80002de <main+0xda>
-			GPIOD_ODR &= ~(1U << 12);
  80002c4:	4b19      	ldr	r3, [pc, #100]	@ (800032c <main+0x128>)
  80002c6:	681b      	ldr	r3, [r3, #0]
  80002c8:	4a18      	ldr	r2, [pc, #96]	@ (800032c <main+0x128>)
  80002ca:	f423 5380 	bic.w	r3, r3, #4096	@ 0x1000
  80002ce:	6013      	str	r3, [r2, #0]
-			GPIOD_ODR |=  (1U << 13);
  80002d0:	4b16      	ldr	r3, [pc, #88]	@ (800032c <main+0x128>)
  80002d2:	681b      	ldr	r3, [r3, #0]
  80002d4:	4a15      	ldr	r2, [pc, #84]	@ (800032c <main+0x128>)
  80002d6:	f443 5300 	orr.w	r3, r3, #8192	@ 0x2000
  80002da:	6013      	str	r3, [r2, #0]
  80002dc:	e7bf      	b.n	800025e <main+0x5a>
-        }else if(pc6LedFlag){
  80002de:	797b      	ldrb	r3, [r7, #5]
  80002e0:	b2db      	uxtb	r3, r3
  80002e2:	2b00      	cmp	r3, #0
  80002e4:	d00c      	beq.n	8000300 <main+0xfc>
-        	GPIOD_ODR |=  (1U << 12);
  80002e6:	4b11      	ldr	r3, [pc, #68]	@ (800032c <main+0x128>)
  80002e8:	681b      	ldr	r3, [r3, #0]
  80002ea:	4a10      	ldr	r2, [pc, #64]	@ (800032c <main+0x128>)
  80002ec:	f443 5380 	orr.w	r3, r3, #4096	@ 0x1000
  80002f0:	6013      	str	r3, [r2, #0]
-        	GPIOD_ODR |=  (1U << 13);
  80002f2:	4b0e      	ldr	r3, [pc, #56]	@ (800032c <main+0x128>)
  80002f4:	681b      	ldr	r3, [r3, #0]
  80002f6:	4a0d      	ldr	r2, [pc, #52]	@ (800032c <main+0x128>)
  80002f8:	f443 5300 	orr.w	r3, r3, #8192	@ 0x2000
  80002fc:	6013      	str	r3, [r2, #0]
  80002fe:	e7ae      	b.n	800025e <main+0x5a>
-        }else{
-        	GPIOD_ODR &=  ~(1U << 12);
  8000300:	4b0a      	ldr	r3, [pc, #40]	@ (800032c <main+0x128>)
  8000302:	681b      	ldr	r3, [r3, #0]
  8000304:	4a09      	ldr	r2, [pc, #36]	@ (800032c <main+0x128>)
  8000306:	f423 5380 	bic.w	r3, r3, #4096	@ 0x1000
  800030a:	6013      	str	r3, [r2, #0]
-        	GPIOD_ODR &=  ~(1U << 13);
  800030c:	4b07      	ldr	r3, [pc, #28]	@ (800032c <main+0x128>)
  800030e:	681b      	ldr	r3, [r3, #0]
  8000310:	4a06      	ldr	r2, [pc, #24]	@ (800032c <main+0x128>)
  8000312:	f423 5300 	bic.w	r3, r3, #8192	@ 0x2000
  8000316:	6013      	str	r3, [r2, #0]
-    	pc4LedFlag = ((GPIOC_IDR & (1U << 4)) == 0);
  8000318:	e7a1      	b.n	800025e <main+0x5a>
  800031a:	bf00      	nop
  800031c:	40023830 	.word	0x40023830
@@ -271,111 +209,49 @@ int main(void)
  800032c:	40020c14 	.word	0x40020c14
 
 08000330 <Reset_Handler>:
-
-  .section .text.Reset_Handler
-  .weak Reset_Handler
-  .type Reset_Handler, %function
-Reset_Handler:
-  ldr   r0, =_estack
  8000330:	480d      	ldr	r0, [pc, #52]	@ (8000368 <LoopForever+0x2>)
-  mov   sp, r0          /* set stack pointer */
  8000332:	4685      	mov	sp, r0
-/* Call the clock system initialization function.*/
-  bl  SystemInit
  8000334:	f3af 8000 	nop.w
-
-/* Copy the data segment initializers from flash to SRAM */
-  ldr r0, =_sdata
  8000338:	480c      	ldr	r0, [pc, #48]	@ (800036c <LoopForever+0x6>)
-  ldr r1, =_edata
  800033a:	490d      	ldr	r1, [pc, #52]	@ (8000370 <LoopForever+0xa>)
-  ldr r2, =_sidata
  800033c:	4a0d      	ldr	r2, [pc, #52]	@ (8000374 <LoopForever+0xe>)
-  movs r3, #0
  800033e:	2300      	movs	r3, #0
-  b LoopCopyDataInit
  8000340:	e002      	b.n	8000348 <LoopCopyDataInit>
 
 08000342 <CopyDataInit>:
-
-CopyDataInit:
-  ldr r4, [r2, r3]
  8000342:	58d4      	ldr	r4, [r2, r3]
-  str r4, [r0, r3]
  8000344:	50c4      	str	r4, [r0, r3]
-  adds r3, r3, #4
  8000346:	3304      	adds	r3, #4
 
 08000348 <LoopCopyDataInit>:
-
-LoopCopyDataInit:
-  adds r4, r0, r3
  8000348:	18c4      	adds	r4, r0, r3
-  cmp r4, r1
  800034a:	428c      	cmp	r4, r1
-  bcc CopyDataInit
  800034c:	d3f9      	bcc.n	8000342 <CopyDataInit>
-
-/* Zero fill the bss segment. */
-  ldr r2, =_sbss
  800034e:	4a0a      	ldr	r2, [pc, #40]	@ (8000378 <LoopForever+0x12>)
-  ldr r4, =_ebss
  8000350:	4c0a      	ldr	r4, [pc, #40]	@ (800037c <LoopForever+0x16>)
-  movs r3, #0
  8000352:	2300      	movs	r3, #0
-  b LoopFillZerobss
  8000354:	e001      	b.n	800035a <LoopFillZerobss>
 
 08000356 <FillZerobss>:
-
-FillZerobss:
-  str  r3, [r2]
  8000356:	6013      	str	r3, [r2, #0]
-  adds r2, r2, #4
  8000358:	3204      	adds	r2, #4
 
 0800035a <LoopFillZerobss>:
-
-LoopFillZerobss:
-  cmp r2, r4
  800035a:	42a2      	cmp	r2, r4
-  bcc FillZerobss
  800035c:	d3fb      	bcc.n	8000356 <FillZerobss>
-
-
-/* Call static constructors */
-  bl __libc_init_array
  800035e:	f000 f811 	bl	8000384 <__libc_init_array>
-/* Call the application's entry point.*/
-
-  bl main
  8000362:	f7ff ff4f 	bl	8000204 <main>
 
 08000366 <LoopForever>:
-
-LoopForever:
-  b LoopForever
  8000366:	e7fe      	b.n	8000366 <LoopForever>
-  ldr   r0, =_estack
  8000368:	20020000 	.word	0x20020000
-  ldr r0, =_sdata
  800036c:	20000000 	.word	0x20000000
-  ldr r1, =_edata
  8000370:	20000000 	.word	0x20000000
-  ldr r2, =_sidata
  8000374:	080003ec 	.word	0x080003ec
-  ldr r2, =_sbss
  8000378:	20000000 	.word	0x20000000
-  ldr r4, =_ebss
  800037c:	2000001c 	.word	0x2000001c
 
 08000380 <ADC_IRQHandler>:
- * @retval : None
-*/
-  .section .text.Default_Handler,"ax",%progbits
-Default_Handler:
-Infinite_Loop:
-  b Infinite_Loop
  8000380:	e7fe      	b.n	8000380 <ADC_IRQHandler>
 	...
 

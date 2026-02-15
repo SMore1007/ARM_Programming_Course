@@ -1,6 +1,7 @@
-# STM32CubeIDE / Eclipse
-.metadata/
-.settings/
-Debug/
-Release/
-*.launch
+ESP-IDF Project setup after build 
+
+1. Open the sdkconfig file 
+2. Serial Flasher Config :- flash size to 4 MB
+3. Partition Table :- Factory App 2 OTA definitions 
+4. http server values to 1024 max for the both request header and url length
+5. Open mbedtls and chose the 'Use only most common certificates'

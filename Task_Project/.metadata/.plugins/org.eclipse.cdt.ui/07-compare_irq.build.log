@@ -1,0 +1,61 @@
+23:03:36 **** Build of configuration Debug for project 07-compare_irq ****
+make -j16 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f446retx.d" -MT"Startup/startup_stm32f446retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+../Src/main.c:18:33: error: unknown type name 'uint8_t'
+   18 | void configure_priority_for_irq(uint8_t irq_no, uint8_t priority)
+      |                                 ^~~~~~~
+../Src/main.c:1:1: note: 'uint8_t' is defined in header '<stdint.h>'; did you forget to '#include <stdint.h>'?
+  +++ |+#include <stdint.h>
+    1 | /**
+../Src/main.c:18:49: error: unknown type name 'uint8_t'
+   18 | void configure_priority_for_irq(uint8_t irq_no, uint8_t priority)
+      |                                                 ^~~~~~~
+../Src/main.c:18:49: note: 'uint8_t' is defined in header '<stdint.h>'; did you forget to '#include <stdint.h>'?
+../Src/main.c:26:17: error: unknown type name 'uint8_t'
+   26 | void enable_irq(uint8_t irq_no)
+      |                 ^~~~~~~
+../Src/main.c:26:17: note: 'uint8_t' is defined in header '<stdint.h>'; did you forget to '#include <stdint.h>'?
+../Src/main.c:31:22: error: unknown type name 'uint8_t'
+   31 | void set_pending_irq(uint8_t irq_no)
+      |                      ^~~~~~~
+../Src/main.c:31:22: note: 'uint8_t' is defined in header '<stdint.h>'; did you forget to '#include <stdint.h>'?
+../Src/main.c: In function 'TIM6_DAC_IRQHandler':
+../Src/main.c:39:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   39 |     printf(">>> Enter TIM6 ISR (P=0x80)\n");
+      |     ^~~~~~
+../Src/main.c:1:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+  +++ |+#include <stdio.h>
+    1 | /**
+../Src/main.c:39:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+   39 |     printf(">>> Enter TIM6 ISR (P=0x80)\n");
+      |     ^~~~~~
+../Src/main.c:39:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c:42:5: warning: implicit declaration of function 'set_pending_irq' [-Wimplicit-function-declaration]
+   42 |     set_pending_irq(IRQNO_UART3);
+      |     ^~~~~~~~~~~~~~~
+../Src/main.c: In function 'USART3_IRQHandler':
+../Src/main.c:49:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+   49 |     printf(">>> Enter UART3 ISR (P=0x60)\n");
+      |     ^~~~~~
+../Src/main.c:49:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'OTG_FS_IRQHandler':
+../Src/main.c:59:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+   59 |     printf(">>> Enter OTG FS ISR\n");
+      |     ^~~~~~
+../Src/main.c:59:5: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'main':
+../Src/main.c:67:5: warning: implicit declaration of function 'configure_priority_for_irq' [-Wimplicit-function-declaration]
+   67 |     configure_priority_for_irq(IRQNO_TIM6,   0x80);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Src/main.c:71:5: warning: implicit declaration of function 'enable_irq' [-Wimplicit-function-declaration]
+   71 |     enable_irq(IRQNO_TIM6);
+      |     ^~~~~~~~~~
+make: *** [Src/subdir.mk:25: Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+
+23:03:37 Build Failed. 6 errors, 7 warnings. (took 596ms)
+

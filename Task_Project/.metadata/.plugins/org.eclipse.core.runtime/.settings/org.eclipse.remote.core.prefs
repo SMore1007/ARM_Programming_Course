@@ -1,3 +1,8 @@
+connections/org.eclipse.remote.serial.core.connectionType/STM/serial.baudRate=11
+connections/org.eclipse.remote.serial.core.connectionType/STM/serial.byteSize=3
+connections/org.eclipse.remote.serial.core.connectionType/STM/serial.parity=0
+connections/org.eclipse.remote.serial.core.connectionType/STM/serial.portName=COM3
+connections/org.eclipse.remote.serial.core.connectionType/STM/serial.stopBits=0
 connections/org.eclipse.remote.serial.core.connectionType/STM32F4/serial.baudRate=11
 connections/org.eclipse.remote.serial.core.connectionType/STM32F4/serial.byteSize=3
 connections/org.eclipse.remote.serial.core.connectionType/STM32F4/serial.parity=0

@@ -1,13 +1,14 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:00-halBaseProject Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:02-led_blink_using_switch Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:03-led_switch_struct_base Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:04-otg_HS_IRQ Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:06-3_interrupt,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:09-svc_number,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:10-svc_number_math_operation
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:00-halBaseProject Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:02-led_blink_using_switch Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:03-led_switch_struct_base Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:04-fault_exception Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:06-3_interrupt,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:09-svc_number,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:10-svc_number_math_operation,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:12-prologue_epilogue,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:11-task_schedular
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:00-halBaseProject\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:00-halBaseProject\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:02-led_blink_using_switch\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:02-led_blink_using_switch\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:03-led_switch_struct_base\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:11-task_schedular/activeLaunchMode=debug
 org.eclipse.launchbar.core.descriptorType.default\:00-halBaseProject\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:02-led_blink_using_switch\ Debug/activeLaunchMode=debug
 org.eclipse.launchbar.core.descriptorType.default\:02-led_blink_using_switch\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

@@ -1,7 +1,10 @@
-20:41:14 **** Build of configuration Debug for project 06-3_interrupt ****
-make -j8 all 
+23:03:35 **** Build of configuration Debug for project 06-3_interrupt ****
+make -j16 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f446retx.d" -MT"Startup/startup_stm32f446retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
 arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "06-3_interrupt.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\STM32 Codes\Workspace_2\Task_Project\06-3_interrupt\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="06-3_interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc -o "06-3_interrupt.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\06-3_interrupt\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="06-3_interrupt.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: 06-3_interrupt.elf
  
 arm-none-eabi-size  06-3_interrupt.elf 
@@ -13,5 +16,5 @@ Finished building: default.size.stdout
 Finished building: 06-3_interrupt.list
  
 
-20:41:15 Build Finished. 0 errors, 0 warnings. (took 931ms)
+23:03:36 Build Finished. 0 errors, 0 warnings. (took 1s.114ms)
 

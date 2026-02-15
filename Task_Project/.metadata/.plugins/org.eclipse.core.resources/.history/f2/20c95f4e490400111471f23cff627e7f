@@ -1,0 +1,48 @@
+/*
+ * main.h
+ *
+ *  Created on: Jan 29, 2026
+ *  Author: Sagar More
+ */
+
+#ifndef MAIN_H_
+#define MAIN_H_
+
+#include <stdint.h>
+
+/* Stack sizes */
+#define SIZE_TASK_STACK        1024U
+#define SIZE_SCEDULAR_STACK    1024U
+
+/* SRAM */
+#define SRAM_START             0x20000000U
+#define SRAM_SIZE              (128U * 1024U)
+#define SRAM_END               (SRAM_START + SRAM_SIZE)
+
+/* Stack start addresses */
+#define T1_STACK_START         SRAM_END
+#define T2_STACK_START         (SRAM_END - (1U * SIZE_TASK_STACK))
+#define T3_STACK_START         (SRAM_END - (2U * SIZE_TASK_STACK))
+#define T4_STACK_START         (SRAM_END - (3U * SIZE_TASK_STACK))
+#define IDEAL_STACK_START      (SRAM_END - (4U * SIZE_TASK_STACK))
+#define SCHED_STACK_START      (SRAM_END - (5U * SIZE_TASK_STACK))
+
+/* SysTick */
+#define TICK_HZ                1000U
+#define HSI_CLK                16000000U
+#define SYSTICK_TIM_CLK        HSI_CLK
+
+/* Scheduler */
+#define MAX_TASKS              5U
+
+/* CPU */
+#define DUMMY_XPSR             0x01000000U   /* Thumb bit */
+
+/*  Task state */
+#define TASK_READY_STATE 0x00
+#define TASK_BLOCKED_STATE 0xFF
+
+/* ICSR Reg for pendSV */
+
+#define ICSR (*(volatile uint32_t*)0xE000ED04)
+#endif /* MAIN_H_ */

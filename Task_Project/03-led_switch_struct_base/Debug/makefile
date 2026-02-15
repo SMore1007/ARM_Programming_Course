@@ -59,8 +59,8 @@ all: main-build
 main-build: 03-led_switch_struct_base.elf secondary-outputs
 
 # Tool invocations
-03-led_switch_struct_base.elf 03-led_switch_struct_base.map: $(OBJS) $(USER_OBJS) D:\STM32\ Codes\Workspace_2\Task_Project\03-led_switch_struct_base\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "03-led_switch_struct_base.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\STM32 Codes\Workspace_2\Task_Project\03-led_switch_struct_base\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="03-led_switch_struct_base.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+03-led_switch_struct_base.elf 03-led_switch_struct_base.map: $(OBJS) $(USER_OBJS) D:\Argyan\ Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\03-led_switch_struct_base\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "03-led_switch_struct_base.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\03-led_switch_struct_base\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="03-led_switch_struct_base.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

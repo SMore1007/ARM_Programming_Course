@@ -1,7 +1,28 @@
-23:02:40 **** Incremental Build of configuration Debug for project 10-svc_number_math_operation ****
-make -j8 all 
-arm-none-eabi-size  10-svc_number_math_operation.elf 
+23:08:23 **** Incremental Build of configuration Debug for project 11-task_schedular ****
+make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "11-task_schedular.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\11-task_schedular\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="11-task_schedular.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 11-task_schedular.elf
+ 
+arm-none-eabi-size  11-task_schedular.elf 
+arm-none-eabi-objdump -h -S 11-task_schedular.elf  > "11-task_schedular.list"
    text	   data	    bss	    dec	    hex	filename
-   5332	     92	   1900	   7324	   1c9c	10-svc_number_math_operation.elf
+   2044	      4	   1652	   3700	    e74	11-task_schedular.elf
+Finished building: default.size.stdout
+ 
+Finished building: 11-task_schedular.list
+ 
+23:08:37 **** Incremental Build of configuration Debug for project 11-task_schedular ****
+make -j16 all 
+arm-none-eabi-size  11-task_schedular.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2044	      4	   1652	   3700	    e74	11-task_schedular.elf
+Finished building: default.size.stdout
+ 
+23:09:36 **** Incremental Build of configuration Debug for project 11-task_schedular ****
+make -j16 all 
+arm-none-eabi-size  11-task_schedular.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2044	      4	   1652	   3700	    e74	11-task_schedular.elf
 Finished building: default.size.stdout
  

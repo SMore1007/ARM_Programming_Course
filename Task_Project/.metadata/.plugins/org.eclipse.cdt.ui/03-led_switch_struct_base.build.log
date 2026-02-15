@@ -1,0 +1,20 @@
+23:03:31 **** Build of configuration Debug for project 03-led_switch_struct_base ****
+make -j16 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f446retx.d" -MT"Startup/startup_stm32f446retx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f446retx.o" "../Startup/startup_stm32f446retx.s"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+arm-none-eabi-gcc -o "03-led_switch_struct_base.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Argyan Technology\STM32_Embedded_Course\ARM_Programming_Course\Task_Project\03-led_switch_struct_base\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="03-led_switch_struct_base.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 03-led_switch_struct_base.elf
+ 
+arm-none-eabi-size  03-led_switch_struct_base.elf 
+arm-none-eabi-objdump -h -S 03-led_switch_struct_base.elf  > "03-led_switch_struct_base.list"
+   text	   data	    bss	    dec	    hex	filename
+    800	      0	   1568	   2368	    940	03-led_switch_struct_base.elf
+Finished building: default.size.stdout
+ 
+Finished building: 03-led_switch_struct_base.list
+ 
+
+23:03:33 Build Finished. 0 errors, 0 warnings. (took 1s.105ms)
+

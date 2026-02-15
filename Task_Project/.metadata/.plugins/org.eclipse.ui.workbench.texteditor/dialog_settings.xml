@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="hasShownOverlayPopupBefore" value="true"/>
-	<item key="replaceBarOpen" value="false"/>
+	<item key="replaceBarOpen" value="true"/>
 	<list key="searchhistory">
+		<item value="schedule"/>
+		<item value="delay"/>
+		<item value="save"/>
+		<item value="update"/>
+		<item value="TASK_RUNNING_STATE"/>
+		<item value="unblock_taks"/>
+		<item value="psp_of_tasks"/>
+		<item value="init_scheduler_stack"/>
+		<item value="ITM_SendChar"/>
 		<item value="TIM6"/>
 		<item value="I2C1"/>
 		<item value="OTG"/>
 		<item value="AHB1ENR"/>
+	</list>
+	<list key="replacehistory">
+		<item value="TASK_READY_STATE"/>
 	</list>
 </section>
