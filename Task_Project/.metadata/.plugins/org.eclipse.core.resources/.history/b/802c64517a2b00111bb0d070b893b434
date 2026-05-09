@@ -1,0 +1,289 @@
+/**
+***********************************************************************
+* @file main.c
+* @author Sagar More
+* @brief Minimal RTOS Scheduler using SysTick + PendSV + task_delay
+***********************************************************************
+*/
+
+#include "main.h"      // MCU specific definitions (registers, macros)
+#include "led.h"       // LED control functions
+
+/* ================= TASK PROTOTYPES ================= */
+// Task functions (like threads)
+void task1_handler(void);
+void task2_handler(void);
+void task3_handler(void);
+void task4_handler(void);
+void ideal_task(void);   // Idle task (runs when no task is ready)
+
+/* ================= SCHEDULER PROTOTYPES ================= */
+// Scheduler-related functions
+void init_tasks_stack(void);          // Initialize task stacks
+void init_systick(uint32_t tick_hz); // Configure SysTick timer
+void switch_sp_to_psp(void);         // Switch MSP → PSP
+uint32_t get_psp_value(void);        // Get PSP of current task
+void save_psp_value(uint32_t psp);   // Save PSP into TCB
+void update_next_task(void);         // Select next task
+void task_delay(uint32_t tick_count);// Delay a task
+void unblock_tasks(void);            // Wake blocked tasks
+void update_global_tick_count(void); // Increment system tick
+void schedule(void);                 // Trigger context switch
+
+/* ================= GLOBAL VARIABLES ================= */
+uint8_t current_task = 1;   // Index of current task (start from task1, not idle)
+uint32_t g_tick_count = 0;  // Global tick counter (system time)
+
+/* ================= TCB (Task Control Block) ================= */
+typedef struct
+{
+    uint32_t psp_value;             // Process Stack Pointer of task
+    uint32_t block_count;           // Tick count until which task is blocked
+    uint8_t current_state;          // READY or BLOCKED state
+    void (*task_handler)(void);     // Pointer to task function
+} TCB_t;
+
+TCB_t user_tasks[MAX_TASKS];  // Array storing all tasks
+
+/* ================= MAIN FUNCTION ================= */
+int main(void)
+{
+    /* Set MSP (Main Stack Pointer) for scheduler */
+    __asm volatile("MSR MSP, %0" ::"r"(SCHED_STACK_START));
+
+    /* Set PendSV interrupt priority to lowest */
+    NVIC_SHPR3 |= (0xFF << 16);
+
+    init_tasks_stack();  // Initialize all task stacks
+    led_init_all();      // Initialize LEDs
+    init_systick(TICK_HZ); // Start SysTick timer
+
+    switch_sp_to_psp();  // Switch CPU to PSP (used by tasks)
+
+    task1_handler();     // Start first task manually (never returns)
+
+    while (1);           // Should never reach here
+}
+
+/* ================= SYSTICK FUNCTIONS ================= */
+
+// Increment global tick count (called every tick)
+void update_global_tick_count(void)
+{
+    g_tick_count++;
+}
+
+// Unblock tasks whose delay time is over
+void unblock_tasks(void)
+{
+    for (int i = 1; i < MAX_TASKS; i++)  // Skip idle task (index 0)
+    {
+        // If task is blocked and delay time is completed
+        if (user_tasks[i].current_state == TASK_BLOCKED_STATE && user_tasks[i].block_count <= g_tick_count)
+        {
+            user_tasks[i].current_state = TASK_READY_STATE; // Make task ready
+        }
+    }
+}
+
+// SysTick Interrupt Handler (runs periodically)
+void SysTick_Handler(void)
+{
+    update_global_tick_count(); // Update time
+    unblock_tasks();            // Wake tasks if needed
+    schedule();                 // Request context switch
+}
+
+/* ================= PENDSV HANDLER (CONTEXT SWITCH) ================= */
+__attribute__((naked)) void PendSV_Handler(void)
+{
+    __asm volatile(
+        "MRS R0, PSP \n"            // Get current task PSP
+        "STMDB R0!, {R4-R11} \n"   // Save registers R4-R11 to stack
+
+        "PUSH {LR} \n"             // Save LR
+        "BL save_psp_value \n"     // Save updated PSP into TCB
+
+        "BL update_next_task \n"   // Select next task
+
+        "BL get_psp_value \n"      // Get PSP of next task
+        "POP {LR} \n"              // Restore LR
+
+        "LDMIA R0!, {R4-R11} \n"   // Restore registers of next task
+        "MSR PSP, R0 \n"           // Update PSP
+
+        "BX LR \n");               // Return (resume next task)
+}
+
+/* ================= TASK SCHEDULING ================= */
+// Round-robin scheduling
+void update_next_task(void)
+{
+    for (int i = 0; i < MAX_TASKS; i++)
+    {
+        current_task++;                  // Move to next task
+        current_task %= MAX_TASKS;       // Wrap around
+
+        if (user_tasks[current_task].current_state == TASK_READY_STATE)
+            return; // Select this task if ready
+    }
+
+    current_task = 0; // If none ready → run idle task
+}
+
+/* ================= TASK STACK INITIALIZATION ================= */
+void init_tasks_stack(void)
+{
+    uint32_t *psp;
+
+    // Initialize TCB for each task
+    user_tasks[0] = (TCB_t){IDEAL_STACK_START, 0, TASK_READY_STATE, ideal_task};
+    user_tasks[1] = (TCB_t){T1_STACK_START, 0, TASK_READY_STATE, task1_handler};
+    user_tasks[2] = (TCB_t){T2_STACK_START, 0, TASK_READY_STATE, task2_handler};
+    user_tasks[3] = (TCB_t){T3_STACK_START, 0, TASK_READY_STATE, task3_handler};
+    user_tasks[4] = (TCB_t){T4_STACK_START, 0, TASK_READY_STATE, task4_handler};
+
+    // Prepare initial stack frame for each task
+    for (int i = 0; i < MAX_TASKS; i++)
+    {
+        psp = (uint32_t *)user_tasks[i].psp_value;
+
+        *(--psp) = DUMMY_XPSR;                     // xPSR
+        *(--psp) = (uint32_t)user_tasks[i].task_handler; // PC (task entry point)
+        *(--psp) = 0xFFFFFFFD;                    // LR (return using PSP)
+        *(--psp) = 0; // R12
+        *(--psp) = 0; // R3
+        *(--psp) = 0; // R2
+        *(--psp) = 0; // R1
+        *(--psp) = 0; // R0
+
+        // R4-R11 (software saved registers)
+        for (int j = 0; j < 8; j++)
+            *(--psp) = 0;
+
+        user_tasks[i].psp_value = (uint32_t)psp; // Save updated PSP
+    }
+}
+
+/* ================= SWITCH MSP TO PSP ================= */
+__attribute__((naked)) void switch_sp_to_psp(void)
+{
+    __asm volatile(
+        "PUSH {LR} \n"        // Save LR
+        "BL get_psp_value \n" // Get PSP of first task
+        "MSR PSP, R0 \n"      // Set PSP
+
+        "POP {LR} \n"         // Restore LR
+
+        "MOV R0, #0x02 \n"    // CONTROL register: use PSP
+        "MSR CONTROL, R0 \n"
+
+        "BX LR \n");          // Return
+}
+
+/* ================= SYSTICK INITIALIZATION ================= */
+void init_systick(uint32_t tick_hz)
+{
+    uint32_t count = (SYSTICK_TIM_CLK / tick_hz) - 1; // Calculate reload value
+
+    *(uint32_t *)0xE000E014 = count; // Load SysTick reload register
+    *(uint32_t *)0xE000E010 = 7;     // Enable SysTick, interrupt, processor clock
+}
+
+/* ================= TASK DEFINITIONS ================= */
+
+// Idle task (low power mode)
+void ideal_task(void)
+{
+    while (1)
+    {
+        __asm volatile("WFI"); // Wait For Interrupt
+    }
+}
+
+// Task 1 → Blink green LED
+void task1_handler(void)
+{
+    while (1)
+    {
+        led_on(LED_GREEN);
+        task_delay(1000);
+        led_off(LED_GREEN);
+        task_delay(1000);
+    }
+}
+
+// Task 2 → Blink orange LED
+void task2_handler(void)
+{
+    while (1)
+    {
+        led_on(LED_ORANGE);
+        task_delay(500);
+        led_off(LED_ORANGE);
+        task_delay(500);
+    }
+}
+
+// Task 3 → Blink blue LED
+void task3_handler(void)
+{
+    while (1)
+    {
+        led_on(LED_BLUE);
+        task_delay(250);
+        led_off(LED_BLUE);
+        task_delay(250);
+    }
+}
+
+// Task 4 → Blink red LED
+void task4_handler(void)
+{
+    while (1)
+    {
+        led_on(LED_RED);
+        task_delay(125);
+        led_off(LED_RED);
+        task_delay(125);
+    }
+}
+
+/* ================= TASK DELAY ================= */
+void task_delay(uint32_t tick_count)
+{
+    INTERRUPT_DISABLE(); // Disable interrupts (critical section)
+
+    if (current_task != 0) // Do not block idle task
+    {
+        // Set wake-up time
+        user_tasks[current_task].block_count = g_tick_count + tick_count;
+
+        // Mark task as blocked
+        user_tasks[current_task].current_state = TASK_BLOCKED_STATE;
+
+        schedule(); // Trigger context switch
+    }
+
+    INTERRUPT_ENABLE(); // Enable interrupts
+}
+
+/* ================= SCHEDULER ================= */
+void schedule(void)
+{
+    ICSR |= (1 << 28); // Set PendSV pending bit → trigger context switch
+}
+
+/* ================= PSP HELPER FUNCTIONS ================= */
+
+// Get PSP of current task
+uint32_t get_psp_value(void)
+{
+    return user_tasks[current_task].psp_value;
+}
+
+// Save PSP of current task
+void save_psp_value(uint32_t psp)
+{
+    user_tasks[current_task].psp_value = psp;
+}
